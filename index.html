@@ -8,34 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-            },
-            colors: {
-              'e-black': '#1A201A',
-              'e-white': '#F1F2E6',
-              'e-gold': '#FFC700',
-              'e-danger': '#e53e3e',
-              'e-gray': {
-                DEFAULT: '#A3A39A',
-                light: '#BDBDAF',
-                dark: '#242C24',
-                'darker': '#1E241E',
-              }
-            }
-          },
-        },
-      }
-    </script>
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
       body {
         background-color: #1A201A;
         color: #F1F2E6;
@@ -44,19 +17,19 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        font-family: 'Inter', sans-serif;
       }
 
-      /* Login card styling */
-      .login-card {
+      .card {
         background: #242C24;
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 0 15px rgba(0,0,0,0.6);
         width: 100%;
-        max-width: 350px;
+        max-width: 400px;
       }
 
-      .login-card h1 {
+      .card h1 {
         font-family: 'Playfair Display', serif;
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
@@ -64,7 +37,7 @@
         color: #FFC700;
       }
 
-      .login-card input {
+      .card input {
         width: 100%;
         padding: 0.75rem 1rem;
         margin-bottom: 1rem;
@@ -73,7 +46,7 @@
         outline: none;
       }
 
-      .login-card button {
+      .card button {
         width: 100%;
         padding: 0.75rem;
         border-radius: 0.5rem;
@@ -84,19 +57,66 @@
         transition: 0.3s;
       }
 
-      .login-card button:hover {
+      .card button:hover {
         background-color: #e6b500;
+      }
+
+      .toggle-text {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .toggle-text span {
+        color: #FFC700;
+        cursor: pointer;
+        font-weight: 600;
       }
     </style>
   </head>
   <body>
-    <div class="login-card">
-      <h1>EcoFinds Login</h1>
-      <form>
-        <input type="text" placeholder="Username" required />
-        <input type="password" placeholder="Password" required />
+    <div class="card" id="auth-card">
+      <h1 id="form-title">EcoFinds Login</h1>
+      <form id="auth-form">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
+      <p class="toggle-text">
+        Don't have an account? <span onclick="toggleForm()">Sign Up</span>
+      </p>
     </div>
+
+    <script>
+      const formTitle = document.getElementById("form-title");
+      const authForm = document.getElementById("auth-form");
+      const toggleText = document.querySelector(".toggle-text");
+
+      let isLogin = true;
+
+      function toggleForm() {
+        authForm.innerHTML = "";
+        if (isLogin) {
+          formTitle.textContent = "EcoFinds Sign Up";
+          authForm.innerHTML = `
+            <input type="text" placeholder="Username" required />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <input type="password" placeholder="Confirm Password" required />
+            <button type="submit">Sign Up</button>
+          `;
+          toggleText.innerHTML = `Already have an account? <span onclick="toggleForm()">Login</span>`;
+        } else {
+          formTitle.textContent = "EcoFinds Login";
+          authForm.innerHTML = `
+            <input type="text" placeholder="Username" required />
+            <input type="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+          `;
+          toggleText.innerHTML = `Don't have an account? <span onclick="toggleForm()">Sign Up</span>`;
+        }
+        isLogin = !isLogin;
+      }
+    </script>
   </body>
 </html>
